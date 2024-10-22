@@ -1,0 +1,20 @@
+services:
+  cli:
+    image: php:8.2.24-cli
+    command: ["sleep", "infinity"]
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 8080:80
+    depends_on: 
+      - php
+  php:
+    build:
+      context: ./php-fpm
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/var/www/html
